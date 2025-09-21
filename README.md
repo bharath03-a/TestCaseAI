@@ -94,7 +94,7 @@ The system uses environment variables for configuration. See `env_template.txt` 
 
 - `GOOGLE_API_KEY`: Required - Your Google Gemini API key
 - `TAVILY_API_KEY`: Optional - For enhanced search capabilities
-- `GEMINI_MODEL`: Default - `gemini-1.5-pro`
+- `GEMINI_MODEL`: Default - `gemini-2.5-pro`
 - `GEMINI_TEMPERATURE`: Default - `0.3`
 - `MIN_COMPLETENESS_SCORE`: Default - `0.8`
 
@@ -120,6 +120,14 @@ The system generates comprehensive test cases including:
 - **Security Test Cases**: Validate security controls
 
 ## Workflow Process
+
+The system uses a multi-step LangGraph workflow with conditional routing and error handling. The diagram below shows the actual workflow structure:
+
+![Healthcare Test Case Generation Workflow](docs/healthcare_workflow.png)
+
+*Workflow diagram generated using LangGraph's built-in visualization capabilities*
+
+### Workflow Steps:
 
 1. **Document Parsing**: Extract text from various document formats
 2. **Requirement Extraction**: Use AI to identify and structure requirements
