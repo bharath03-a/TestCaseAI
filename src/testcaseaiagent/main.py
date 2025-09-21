@@ -1,5 +1,5 @@
 """
-Main healthcare test case generation system using LangGraph and Gemini.
+Main entry point for the healthcare test case generation system.
 """
 
 import json
@@ -9,8 +9,8 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 
 import dotenv
-from workflow import HealthcareTestCaseGenerator
-from models import ComplianceStandard
+from .workflows import HealthcareTestCaseGenerator
+from .models import ComplianceStandard
 
 # Setup logging
 logging.basicConfig(
@@ -45,25 +45,25 @@ def main():
             """
         }
     ]
-    
+
     # Process documents
     result = test_case_generator.process_documents(
         documents=sample_documents,
         compliance_standards=[ComplianceStandard.FDA, ComplianceStandard.HIPAA, ComplianceStandard.IEC_62304]
     )
-    
+
     # Print results
     print("Processing Results:")
     print(f"Success: {result['success']}")
     print(f"Session ID: {result['session_id']}")
-    
+
     if result['success']:
         print(f"Requirements Count: {len(result.get('requirements', []))}")
         print(f"Test Cases Count: {len(result.get('test_cases', []))}")
         print(f"Quality Score: {result['quality_metrics']['completeness_score'] if result.get('quality_metrics') else 'N/A'}")
     else:
         print(f"Error: {result.get('error', 'Unknown error')}")
-    
+
     if result.get('error_log'):
         print("Errors:")
         for error in result['error_log']:
@@ -72,4 +72,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
