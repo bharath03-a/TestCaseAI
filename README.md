@@ -58,14 +58,14 @@ Set your API keys:
 
 ```bash
 export GOOGLE_API_KEY="your_gemini_api_key_here"
-export TAVILY_API_KEY="your_tavily_api_key_here"  # Optional
+export TAVILY_API_KEY="your_tavily_api_key_here"
 ```
 
 ### Run the System
 
 ```bash
 # Using the run script (recommended)
-python run.py
+python main.py
 
 # Or directly
 python examples/basic_usage.py
@@ -151,7 +151,7 @@ The system uses a multi-step LangGraph workflow with conditional routing and err
 3. Update models in `src/testcaseaiagent/models/` if needed
 4. Add configuration options in `src/testcaseaiagent/core/config.py`
 
-## API Usage
+## Usage
 
 ```python
 from src.testcaseaiagent.workflows import HealthcareTestCaseGenerator
@@ -224,15 +224,6 @@ For support and questions:
 - Create an issue in the repository
 - Check the documentation in the `docs/` folder
 - Review the examples in the `examples/` folder
-
-## Roadmap
-
-- [ ] Jira/Polarion/Azure DevOps integration
-- [ ] Advanced compliance verification
-- [ ] Batch processing API
-- [ ] Web interface
-- [ ] Multi-language support
-- [ ] Enhanced AI models integration
 
 ---
 
