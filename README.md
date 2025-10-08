@@ -45,7 +45,7 @@ src/testcaseaiagent/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://www.primevideo.com/detail/Baahubali-The-Beginning/0OZ6EXLR47FYSDHDMJBQ33V4BI
 cd TestCaseAIAgent
 
 # Install dependencies
