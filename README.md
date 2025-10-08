@@ -41,11 +41,25 @@ src/testcaseaiagent/
 
 ## Quick Start
 
-### Installation
+### Option 1: Docker
 
 ```bash
 # Clone the repository
-git clone https://www.primevideo.com/detail/Baahubali-The-Beginning/0OZ6EXLR47FYSDHDMJBQ33V4BI
+git clone https://github.com/bharath03-a/TestCaseAI.git
+cd TestCaseAIAgent
+
+# Build Docker image
+docker build -t testcase-ai-agent .
+
+# Run with environment variables
+docker run -e GOOGLE_API_KEY="your_api_key" -v $(pwd)/data:/app/data testcase-ai-agent
+```
+
+### Option 2: Local Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/bharath03-a/TestCaseAI.git
 cd TestCaseAIAgent
 
 # Install dependencies
@@ -65,7 +79,7 @@ export TAVILY_API_KEY="your_tavily_api_key_here"
 
 ```bash
 # Using the run script (recommended)
-python main.py
+python run.py
 
 # Or directly
 python examples/basic_usage.py
@@ -136,6 +150,21 @@ The system uses a multi-step LangGraph workflow with conditional routing and err
 5. **Quality Validation**: Assess generated content quality
 6. **Finalization**: Generate reports and store results
 
+## Docker
+
+The application can be run using Docker for easy deployment:
+
+```bash
+# Build the image
+docker build -t testcase-ai-agent .
+
+# Run with environment variables
+docker run -e GOOGLE_API_KEY="your_key" testcase-ai-agent
+
+# Run with volume for data persistence
+docker run -e GOOGLE_API_KEY="your_key" -v $(pwd)/data:/app/data testcase-ai-agent
+```
+
 ## Development
 
 ### Project Structure
@@ -143,6 +172,7 @@ The system uses a multi-step LangGraph workflow with conditional routing and err
 - **`src/`**: Main source code organized in modules
 - **`docs/`**: Documentation
 - **`examples/`**: Usage examples
+- **`Dockerfile`**: Docker container configuration
 
 ### Adding New Features
 
