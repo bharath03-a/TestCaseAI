@@ -2,11 +2,7 @@
 Main entry point for the healthcare test case generation system.
 """
 
-import json
 import logging
-import os
-from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 import dotenv
 
@@ -64,9 +60,12 @@ def main():
     if result["success"]:
         print(f"Requirements Count: {len(result.get('requirements', []))}")
         print(f"Test Cases Count: {len(result.get('test_cases', []))}")
-        print(
-            f"Quality Score: {result['quality_metrics']['completeness_score'] if result.get('quality_metrics') else 'N/A'}"
+        quality_score = (
+            result["quality_metrics"]["completeness_score"]
+            if result.get("quality_metrics")
+            else "N/A"
         )
+        print(f"Quality Score: {quality_score}")
     else:
         print(f"Error: {result.get('error', 'Unknown error')}")
 

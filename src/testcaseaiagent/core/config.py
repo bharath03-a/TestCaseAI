@@ -2,12 +2,10 @@
 Application configuration and settings management.
 """
 
-from typing import List, Optional
-
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
 
-from ..models import ComplianceStandard, DocumentType, TestCasePriority
+from ..models import ComplianceStandard, DocumentType
 
 
 class Settings(BaseSettings):
@@ -43,7 +41,7 @@ class Settings(BaseSettings):
     min_compliance_score: float = Field(default=0.8, env="MIN_COMPLIANCE_SCORE")
 
     # Default Compliance Standards
-    default_compliance_standards: List[ComplianceStandard] = Field(
+    default_compliance_standards: list[ComplianceStandard] = Field(
         default=[
             ComplianceStandard.FDA,
             ComplianceStandard.HIPAA,
@@ -54,7 +52,7 @@ class Settings(BaseSettings):
     )
 
     # Document Processing
-    supported_document_types: List[DocumentType] = Field(
+    supported_document_types: list[DocumentType] = Field(
         default=[
             DocumentType.PDF,
             DocumentType.WORD,
@@ -67,7 +65,7 @@ class Settings(BaseSettings):
     )
 
     # Output Configuration
-    default_output_formats: List[str] = Field(
+    default_output_formats: list[str] = Field(
         default=["json", "xlsx", "xml"], env="DEFAULT_OUTPUT_FORMATS"
     )
     output_directory: str = Field(default="./output", env="OUTPUT_DIRECTORY")
@@ -84,10 +82,10 @@ class Settings(BaseSettings):
     log_format: str = Field(
         default="%(asctime)s - %(name)s - %(levelname)s - %(message)s", env="LOG_FORMAT"
     )
-    log_file: Optional[str] = Field(default=None, env="LOG_FILE")
+    log_file: str | None = Field(default=None, env="LOG_FILE")
 
     # Healthcare Domain Configuration
-    healthcare_domains: List[str] = Field(
+    healthcare_domains: list[str] = Field(
         default=[
             "medical_devices",
             "electronic_health_records",
@@ -127,22 +125,22 @@ class Settings(BaseSettings):
     jira_integration_enabled: bool = Field(
         default=False, env="JIRA_INTEGRATION_ENABLED"
     )
-    jira_url: Optional[str] = Field(default=None, env="JIRA_URL")
-    jira_username: Optional[str] = Field(default=None, env="JIRA_USERNAME")
-    jira_api_token: Optional[str] = Field(default=None, env="JIRA_API_TOKEN")
+    jira_url: str | None = Field(default=None, env="JIRA_URL")
+    jira_username: str | None = Field(default=None, env="JIRA_USERNAME")
+    jira_api_token: str | None = Field(default=None, env="JIRA_API_TOKEN")
 
     polarion_integration_enabled: bool = Field(
         default=False, env="POLARION_INTEGRATION_ENABLED"
     )
-    polarion_url: Optional[str] = Field(default=None, env="POLARION_URL")
-    polarion_username: Optional[str] = Field(default=None, env="POLARION_USERNAME")
-    polarion_password: Optional[str] = Field(default=None, env="POLARION_PASSWORD")
+    polarion_url: str | None = Field(default=None, env="POLARION_URL")
+    polarion_username: str | None = Field(default=None, env="POLARION_USERNAME")
+    polarion_password: str | None = Field(default=None, env="POLARION_PASSWORD")
 
     azure_devops_integration_enabled: bool = Field(
         default=False, env="AZURE_DEVOPS_INTEGRATION_ENABLED"
     )
-    azure_devops_url: Optional[str] = Field(default=None, env="AZURE_DEVOPS_URL")
-    azure_devops_token: Optional[str] = Field(default=None, env="AZURE_DEVOPS_TOKEN")
+    azure_devops_url: str | None = Field(default=None, env="AZURE_DEVOPS_URL")
+    azure_devops_token: str | None = Field(default=None, env="AZURE_DEVOPS_TOKEN")
 
     # Performance Configuration
     enable_caching: bool = Field(default=True, env="ENABLE_CACHING")

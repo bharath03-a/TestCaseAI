@@ -6,7 +6,7 @@ compliant, traceable test cases from healthcare software requirements.
 """
 
 from .core import Settings
-from .models import *
+from .models import *  # noqa: F403
 from .workflows import HealthcareTestCaseGenerator
 
 __version__ = "0.1.0"

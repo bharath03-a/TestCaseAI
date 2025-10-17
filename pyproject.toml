@@ -44,6 +44,7 @@ dependencies = [
     "pyppeteer>=2.0.0",
     "ipython>=9.5.0",
     "pre-commit>=4.3.0",
+    "ruff>=0.14.1",
 ]
 
 [tool.setuptools.packages.find]
@@ -51,3 +52,13 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 testcaseaiagent = ["*.json", "*.yaml", "*.yml"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "B", "I", "W", "C4", "UP"]
+ignore = ["E203"]
+fix = true
+
+[tool.ruff.isort]
+combine-as-imports = true
+known-first-party = ["testcaseaiagent"]

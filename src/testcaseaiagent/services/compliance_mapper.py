@@ -2,9 +2,7 @@
 Compliance mapping service for healthcare requirements.
 """
 
-import json
 import logging
-from typing import Any, Dict, List
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -39,9 +37,9 @@ class ComplianceMapper:
 
     def map_requirements_to_compliance(
         self,
-        requirements: List[Requirement],
-        compliance_standards: List[ComplianceStandard],
-    ) -> List[ComplianceMapping]:
+        requirements: list[Requirement],
+        compliance_standards: list[ComplianceStandard],
+    ) -> list[ComplianceMapping]:
         """
         Map requirements to relevant compliance standards.
 
@@ -74,8 +72,8 @@ class ComplianceMapper:
             return self._create_fallback_mappings(requirements, compliance_standards)
 
     def _map_single_requirement(
-        self, requirement: Requirement, compliance_standards: List[ComplianceStandard]
-    ) -> List[ComplianceMapping]:
+        self, requirement: Requirement, compliance_standards: list[ComplianceStandard]
+    ) -> list[ComplianceMapping]:
         """Map a single requirement to compliance standards."""
         mappings = []
 
@@ -91,7 +89,8 @@ class ComplianceMapper:
                     compliance_standard=standard,
                     mapping_confidence=confidence,
                     relevant_sections=self._get_relevant_sections(standard),
-                    compliance_notes=f"Mapped based on keyword analysis with {confidence:.2f} confidence",
+                    compliance_notes=f"""Mapped based on keyword analysis with
+                     {confidence:.2f} confidence.""",
                 )
                 mappings.append(mapping)
 
@@ -150,7 +149,7 @@ class ComplianceMapper:
         confidence = matches / len(standard_keywords)
         return min(confidence, 1.0)
 
-    def _get_relevant_sections(self, standard: ComplianceStandard) -> List[str]:
+    def _get_relevant_sections(self, standard: ComplianceStandard) -> list[str]:
         """Get relevant sections for a compliance standard."""
         sections = {
             ComplianceStandard.FDA: ["21 CFR Part 820", "21 CFR Part 11"],
@@ -184,9 +183,9 @@ class ComplianceMapper:
 
     def _create_fallback_mappings(
         self,
-        requirements: List[Requirement],
-        compliance_standards: List[ComplianceStandard],
-    ) -> List[ComplianceMapping]:
+        requirements: list[Requirement],
+        compliance_standards: list[ComplianceStandard],
+    ) -> list[ComplianceMapping]:
         """Create fallback mappings when AI mapping fails."""
         logger.info("Using fallback compliance mapping method")
         mappings = []

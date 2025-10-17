@@ -3,7 +3,7 @@ Requirement extraction service using AI for healthcare domain.
 """
 
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -59,7 +59,7 @@ class RequirementExtractor:
 
     def _extract_requirements_from_text(
         self, text: str, doc_index: int
-    ) -> List[Requirement]:
+    ) -> list[Requirement]:
         """Extract requirements from text content."""
         requirements = []
 
@@ -131,7 +131,7 @@ class RequirementExtractor:
         else:
             return TestCasePriority.MEDIUM
 
-    def _identify_compliance_standards(self, line: str) -> List[str]:
+    def _identify_compliance_standards(self, line: str) -> list[str]:
         """Identify relevant compliance standards from requirement text."""
         standards = []
         line_lower = line.lower()

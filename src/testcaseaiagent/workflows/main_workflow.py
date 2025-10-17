@@ -4,13 +4,13 @@ Main LangGraph workflow for healthcare test case generation.
 
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, StateGraph
 
 from ..core.config import settings
-from ..models import ComplianceStandard, GraphState, ProcessingStatus, WorkflowStep
+from ..models import ComplianceStandard, GraphState, ProcessingStatus
 from ..services import (
     ComplianceMapper,
     DocumentParser,
@@ -183,7 +183,7 @@ class HealthcareTestCaseGenerator:
             return "error"
         return "continue"
 
-    def _generate_final_report(self, state: GraphState) -> Dict[str, Any]:
+    def _generate_final_report(self, state: GraphState) -> dict[str, Any]:
         """Generate final processing report."""
         return {
             "status": "completed",
@@ -241,10 +241,10 @@ class HealthcareTestCaseGenerator:
 
     def process_documents(
         self,
-        documents: List[Dict[str, Any]],
-        session_id: Optional[str] = None,
-        compliance_standards: Optional[List[ComplianceStandard]] = None,
-    ) -> Dict[str, Any]:
+        documents: list[dict[str, Any]],
+        session_id: str | None = None,
+        compliance_standards: list[ComplianceStandard] | None = None,
+    ) -> dict[str, Any]:
         """
         Process documents and generate test cases.
 
@@ -324,7 +324,7 @@ class HealthcareTestCaseGenerator:
                 "error_log": [str(e)],
             }
 
-    def get_session_status(self, session_id: str) -> Optional[Dict[str, Any]]:
+    def get_session_status(self, session_id: str) -> dict[str, Any] | None:
         """Get status of a processing session."""
         return self.session_memory.get_session_summary(session_id)
 

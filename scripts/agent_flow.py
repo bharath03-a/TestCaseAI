@@ -1,4 +1,3 @@
-from IPython.display import Image, display
 from langchain_core.runnables.graph import MermaidDrawMethod
 
 from testcaseaiagent.workflows.main_workflow import HealthcareTestCaseGenerator

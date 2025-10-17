@@ -3,7 +3,7 @@ Quality validation service for generated test cases.
 """
 
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 from ..models import QualityMetrics, Requirement, TestCase
 
@@ -50,9 +50,9 @@ class QualityValidator:
 
     def _calculate_quality_metrics(
         self,
-        requirements: List[Requirement],
-        test_cases: List[TestCase],
-        compliance_mappings: List[Dict[str, Any]],
+        requirements: list[Requirement],
+        test_cases: list[TestCase],
+        compliance_mappings: list[dict[str, Any]],
     ) -> QualityMetrics:
         """Calculate quality metrics for the generated content."""
 
@@ -98,19 +98,19 @@ class QualityValidator:
         )
 
     def _calculate_completeness_score(
-        self, requirements: List[Requirement], test_cases: List[TestCase]
+        self, requirements: list[Requirement], test_cases: list[TestCase]
     ) -> float:
         """Calculate completeness score based on requirement coverage."""
         if not requirements:
             return 0.0
 
         # Check how many requirements have associated test cases
-        requirements_with_tests = set(tc.requirement_id for tc in test_cases)
-        covered_requirements = len(requirements_with_tests)
+        requirements_with_tests = {tc.requirement_id for tc in test_cases}
 
-        return min(covered_requirements / len(requirements), 1.0)
+        total_requirements = len(requirements)
+        return min(len(requirements_with_tests) / total_requirements, 1.0)
 
-    def _calculate_accuracy_score(self, test_cases: List[TestCase]) -> float:
+    def _calculate_accuracy_score(self, test_cases: list[TestCase]) -> float:
         """Calculate accuracy score based on test case quality."""
         if not test_cases:
             return 0.0
@@ -136,14 +136,14 @@ class QualityValidator:
         return total_score / len(test_cases)
 
     def _calculate_traceability_score(
-        self, requirements: List[Requirement], test_cases: List[TestCase]
+        self, requirements: list[Requirement], test_cases: list[TestCase]
     ) -> float:
         """Calculate traceability score."""
         if not requirements or not test_cases:
             return 0.0
 
         # Check if all test cases have valid requirement IDs
-        valid_requirement_ids = set(req.id for req in requirements)
+        valid_requirement_ids = {req.id for req in requirements}
         traced_test_cases = sum(
             1 for tc in test_cases if tc.requirement_id in valid_requirement_ids
         )
@@ -151,29 +151,29 @@ class QualityValidator:
         return traced_test_cases / len(test_cases)
 
     def _calculate_compliance_score(
-        self, requirements: List[Requirement], compliance_mappings: List[Dict[str, Any]]
+        self, requirements: list[Requirement], compliance_mappings: list[dict[str, Any]]
     ) -> float:
         """Calculate compliance coverage score."""
         if not requirements:
             return 0.0
 
         # Check how many requirements have compliance mappings
-        mapped_requirements = set(
+        mapped_requirements = {
             mapping.get("requirement_id") for mapping in compliance_mappings
-        )
+        }
         covered_requirements = len(mapped_requirements)
 
         return min(covered_requirements / len(requirements), 1.0)
 
     def _calculate_coverage_percentage(
-        self, requirements: List[Requirement], test_cases: List[TestCase]
+        self, requirements: list[Requirement], test_cases: list[TestCase]
     ) -> float:
         """Calculate overall coverage percentage."""
         if not requirements:
             return 0.0
 
         # Simple coverage calculation
-        requirements_with_tests = set(tc.requirement_id for tc in test_cases)
+        requirements_with_tests = {tc.requirement_id for tc in test_cases}
         covered_count = len(requirements_with_tests)
 
         return (covered_count / len(requirements)) * 100.0

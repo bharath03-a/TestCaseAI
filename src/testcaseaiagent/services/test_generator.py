@@ -2,9 +2,8 @@
 Test case generation service for healthcare requirements.
 """
 
-import json
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -27,8 +26,8 @@ class TestGenerator:
         )
 
     def generate_test_cases(
-        self, requirements: List[Requirement], compliance_mappings: List[Dict[str, Any]]
-    ) -> List[TestCase]:
+        self, requirements: list[Requirement], compliance_mappings: list[dict[str, Any]]
+    ) -> list[TestCase]:
         """
         Generate test cases from requirements.
 
@@ -58,7 +57,7 @@ class TestGenerator:
 
     def _generate_requirement_test_cases(
         self, requirement: Requirement
-    ) -> List[TestCase]:
+    ) -> list[TestCase]:
         """Generate test cases for a single requirement."""
         test_cases = []
 
@@ -92,7 +91,7 @@ class TestGenerator:
         return TestCase(
             id=test_id,
             title=f"Verify {requirement.title} - Positive Scenario",
-            description=f"Test that {requirement.description} works correctly under normal conditions",
+            description=f"Test that {requirement.description} works correctly under normal conditions",  # noqa: E501
             test_type=TestCaseType.FUNCTIONAL,
             priority=self._determine_priority(requirement),
             requirement_id=requirement.id,
@@ -260,8 +259,8 @@ class TestGenerator:
         return any(keyword in requirement_text for keyword in security_keywords)
 
     def _create_fallback_test_cases(
-        self, requirements: List[Requirement]
-    ) -> List[TestCase]:
+        self, requirements: list[Requirement]
+    ) -> list[TestCase]:
         """Create fallback test cases when AI generation fails."""
         logger.info("Using fallback test case generation method")
         test_cases = []

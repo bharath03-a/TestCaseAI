@@ -3,7 +3,6 @@
 Basic usage example for the Healthcare Test Case Generation System.
 """
 
-import os
 import sys
 from pathlib import Path
 
@@ -78,7 +77,7 @@ def main():
 
         if result.get("quality_metrics"):
             metrics = result["quality_metrics"]
-            print(f"Quality Metrics:")
+            print("Quality Metrics:")
             print(f"   - Completeness: {metrics['completeness_score']:.2f}")
             print(f"   - Accuracy: {metrics['accuracy_score']:.2f}")
             print(f"   - Traceability: {metrics['traceability_score']:.2f}")
@@ -86,14 +85,14 @@ def main():
             print(f"   - Coverage: {metrics['coverage_percentage']:.1f}%")
 
         # Show sample requirements
-        print(f"\nSample Requirements:")
+        print("\nSample Requirements:")
         for i, req in enumerate(result["requirements"][:3]):
             print(f"   {i+1}. {req['title']}")
             print(f"      Priority: {req['priority']}")
             print(f"      Standards: {', '.join(req['compliance_standards'])}")
 
         # Show sample test cases
-        print(f"\nSample Test Cases:")
+        print("\nSample Test Cases:")
         for i, tc in enumerate(result["test_cases"][:3]):
             print(f"   {i+1}. {tc['title']}")
             print(f"      Type: {tc['test_type']}")
@@ -107,7 +106,7 @@ def main():
             for error in result["error_log"]:
                 print(f"   - {error}")
 
-    print(f"\nExample completed successfully!")
+    print("\nExample completed successfully!")
 
 
 if __name__ == "__main__":

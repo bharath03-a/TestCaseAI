@@ -4,7 +4,7 @@ Core data models and enums for the healthcare test case generation system.
 
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, List, Literal, Optional, Union
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -72,11 +72,11 @@ class Requirement(BaseModel):
     description: str = Field(..., description="Detailed requirement description")
     priority: TestCasePriority = Field(default=TestCasePriority.MEDIUM)
     source_document: str = Field(..., description="Source document filename")
-    source_section: Optional[str] = Field(None, description="Source section or page")
+    source_section: str | None = Field(None, description="Source section or page")
     requirement_type: str = Field(
         default="functional", description="Type of requirement"
     )
-    compliance_standards: List[str] = Field(
+    compliance_standards: list[str] = Field(
         default_factory=list, description="Relevant compliance standards"
     )
     created_at: datetime = Field(default_factory=datetime.now)
@@ -92,20 +92,20 @@ class TestCase(BaseModel):
     test_type: TestCaseType = Field(default=TestCaseType.FUNCTIONAL)
     priority: TestCasePriority = Field(default=TestCasePriority.MEDIUM)
     requirement_id: str = Field(..., description="Linked requirement ID")
-    test_steps: List[str] = Field(
+    test_steps: list[str] = Field(
         default_factory=list, description="Test execution steps"
     )
-    expected_results: List[str] = Field(
+    expected_results: list[str] = Field(
         default_factory=list, description="Expected test results"
     )
-    test_data: Optional[Dict[str, Any]] = Field(None, description="Required test data")
-    preconditions: List[str] = Field(
+    test_data: dict[str, Any] | None = Field(None, description="Required test data")
+    preconditions: list[str] = Field(
         default_factory=list, description="Test preconditions"
     )
-    postconditions: List[str] = Field(
+    postconditions: list[str] = Field(
         default_factory=list, description="Test postconditions"
     )
-    compliance_standards: List[str] = Field(
+    compliance_standards: list[str] = Field(
         default_factory=list, description="Relevant compliance standards"
     )
     created_at: datetime = Field(default_factory=datetime.now)
@@ -142,13 +142,11 @@ class DocumentMetadata(BaseModel):
     filename: str = Field(..., description="Document filename")
     document_type: DocumentType = Field(..., description="Document type")
     file_size: int = Field(ge=0, description="File size in bytes")
-    page_count: Optional[int] = Field(None, description="Number of pages")
+    page_count: int | None = Field(None, description="Number of pages")
     word_count: int = Field(ge=0, description="Word count")
     parsed_at: datetime = Field(default_factory=datetime.now)
     parsing_status: ProcessingStatus = Field(default=ProcessingStatus.PENDING)
-    error_message: Optional[str] = Field(
-        None, description="Parsing error message if any"
-    )
+    error_message: str | None = Field(None, description="Parsing error message if any")
 
 
 class ComplianceMapping(BaseModel):
@@ -161,10 +159,10 @@ class ComplianceMapping(BaseModel):
     mapping_confidence: float = Field(
         ge=0.0, le=1.0, description="Mapping confidence score"
     )
-    relevant_sections: List[str] = Field(
+    relevant_sections: list[str] = Field(
         default_factory=list, description="Relevant standard sections"
     )
-    compliance_notes: Optional[str] = Field(
+    compliance_notes: str | None = Field(
         None, description="Additional compliance notes"
     )
     created_at: datetime = Field(default_factory=datetime.now)
@@ -179,9 +177,9 @@ class ToolchainIntegration(BaseModel):
     project_id: str = Field(..., description="Project identifier")
     export_format: str = Field(..., description="Export format")
     export_status: ProcessingStatus = Field(default=ProcessingStatus.PENDING)
-    export_url: Optional[str] = Field(None, description="Export URL if available")
-    exported_at: Optional[datetime] = Field(None, description="Export timestamp")
-    error_message: Optional[str] = Field(None, description="Export error if any")
+    export_url: str | None = Field(None, description="Export URL if available")
+    exported_at: datetime | None = Field(None, description="Export timestamp")
+    error_message: str | None = Field(None, description="Export error if any")
 
 
 class WorkflowStep(BaseModel):
@@ -190,12 +188,12 @@ class WorkflowStep(BaseModel):
     step_name: str = Field(..., description="Workflow step name")
     step_type: str = Field(..., description="Step type")
     status: ProcessingStatus = Field(default=ProcessingStatus.PENDING)
-    started_at: Optional[datetime] = Field(None, description="Step start time")
-    completed_at: Optional[datetime] = Field(None, description="Step completion time")
-    duration_seconds: Optional[float] = Field(None, description="Step duration")
+    started_at: datetime | None = Field(None, description="Step start time")
+    completed_at: datetime | None = Field(None, description="Step completion time")
+    duration_seconds: float | None = Field(None, description="Step duration")
     input_count: int = Field(default=0, description="Input items processed")
     output_count: int = Field(default=0, description="Output items generated")
-    error_message: Optional[str] = Field(None, description="Error message if failed")
+    error_message: str | None = Field(None, description="Error message if failed")
 
 
 class SessionMemory(BaseModel):
@@ -204,13 +202,13 @@ class SessionMemory(BaseModel):
     session_id: str = Field(..., description="Unique session identifier")
     created_at: datetime = Field(default_factory=datetime.now)
     last_accessed: datetime = Field(default_factory=datetime.now)
-    workflow_state: Optional[Dict[str, Any]] = Field(
+    workflow_state: dict[str, Any] | None = Field(
         None, description="Current workflow state"
     )
-    conversation_history: List[Dict[str, Any]] = Field(
+    conversation_history: list[dict[str, Any]] = Field(
         default_factory=list, description="Conversation history"
     )
-    context_data: Dict[str, Any] = Field(
+    context_data: dict[str, Any] = Field(
         default_factory=dict, description="Contextual data"
     )
     is_active: bool = Field(default=True, description="Session active status")
@@ -220,41 +218,41 @@ class GraphState(BaseModel):
     """Main state for the LangGraph workflow."""
 
     # Input data
-    input_documents: List[Dict[str, Any]] = Field(default_factory=list)
-    document_metadata: List[DocumentMetadata] = Field(default_factory=list)
-    raw_text_content: List[str] = Field(default_factory=list)
+    input_documents: list[dict[str, Any]] = Field(default_factory=list)
+    document_metadata: list[DocumentMetadata] = Field(default_factory=list)
+    raw_text_content: list[str] = Field(default_factory=list)
 
     # Processing results
-    extracted_requirements: List[Requirement] = Field(default_factory=list)
-    compliance_mappings: List[ComplianceMapping] = Field(default_factory=list)
-    generated_test_cases: List[TestCase] = Field(default_factory=list)
-    quality_metrics: Optional[QualityMetrics] = None
+    extracted_requirements: list[Requirement] = Field(default_factory=list)
+    compliance_mappings: list[ComplianceMapping] = Field(default_factory=list)
+    generated_test_cases: list[TestCase] = Field(default_factory=list)
+    quality_metrics: QualityMetrics | None = None
 
     # Integration and export
-    toolchain_integrations: List[ToolchainIntegration] = Field(default_factory=list)
-    export_formats: List[str] = Field(default_factory=list)
-    export_files: List[str] = Field(default_factory=list)
+    toolchain_integrations: list[ToolchainIntegration] = Field(default_factory=list)
+    export_formats: list[str] = Field(default_factory=list)
+    export_files: list[str] = Field(default_factory=list)
 
     # Session and workflow management
-    session_memory: Optional[SessionMemory] = None
-    workflow_steps: List[WorkflowStep] = Field(default_factory=list)
-    current_step: Optional[str] = None
-    error_log: List[str] = Field(default_factory=list)
+    session_memory: SessionMemory | None = None
+    workflow_steps: list[WorkflowStep] = Field(default_factory=list)
+    current_step: str | None = None
+    error_log: list[str] = Field(default_factory=list)
 
     # Configuration and settings
-    processing_config: Dict[str, Any] = Field(default_factory=dict)
-    compliance_standards: List[ComplianceStandard] = Field(default_factory=list)
-    output_preferences: Dict[str, Any] = Field(default_factory=dict)
+    processing_config: dict[str, Any] = Field(default_factory=dict)
+    compliance_standards: list[ComplianceStandard] = Field(default_factory=list)
+    output_preferences: dict[str, Any] = Field(default_factory=dict)
 
     # Status tracking
     overall_status: ProcessingStatus = ProcessingStatus.PENDING
     progress_percentage: float = 0.0
-    estimated_completion: Optional[datetime] = None
+    estimated_completion: datetime | None = None
 
     # Results and feedback
-    final_report: Optional[Dict[str, Any]] = None
-    user_feedback: Optional[Dict[str, Any]] = None
-    improvement_suggestions: List[str] = Field(default_factory=list)
+    final_report: dict[str, Any] | None = None
+    user_feedback: dict[str, Any] | None = None
+    improvement_suggestions: list[str] = Field(default_factory=list)
 
 
 class APIResponse(BaseModel):
@@ -262,8 +260,8 @@ class APIResponse(BaseModel):
 
     success: bool
     message: str
-    data: Optional[Dict[str, Any]] = None
-    errors: List[str] = Field(default_factory=list)
+    data: dict[str, Any] | None = None
+    errors: list[str] = Field(default_factory=list)
     timestamp: datetime = Field(default_factory=datetime.now)
     request_id: str
 
@@ -271,12 +269,12 @@ class APIResponse(BaseModel):
 class BatchProcessingRequest(BaseModel):
     """Request for batch processing multiple documents."""
 
-    documents: List[Dict[str, Any]]
-    processing_options: Dict[str, Any] = Field(default_factory=dict)
-    compliance_standards: List[ComplianceStandard] = Field(default_factory=list)
-    output_formats: List[str] = Field(default_factory=list)
+    documents: list[dict[str, Any]]
+    processing_options: dict[str, Any] = Field(default_factory=dict)
+    compliance_standards: list[ComplianceStandard] = Field(default_factory=list)
+    output_formats: list[str] = Field(default_factory=list)
     priority: TestCasePriority = TestCasePriority.MEDIUM
-    callback_url: Optional[str] = None
+    callback_url: str | None = None
 
 
 class ValidationResult(BaseModel):
@@ -284,8 +282,8 @@ class ValidationResult(BaseModel):
 
     is_valid: bool
     validation_type: str
-    errors: List[str] = Field(default_factory=list)
-    warnings: List[str] = Field(default_factory=list)
-    suggestions: List[str] = Field(default_factory=list)
+    errors: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    suggestions: list[str] = Field(default_factory=list)
     confidence_score: float = Field(ge=0, le=1)
     validated_at: datetime = Field(default_factory=datetime.now)

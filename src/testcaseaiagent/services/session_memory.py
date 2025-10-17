@@ -5,7 +5,7 @@ Session memory management for workflow state.
 import json
 import logging
 from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from ..models import SessionMemory
 
@@ -17,7 +17,7 @@ class SessionMemoryManager:
 
     def __init__(self):
         """Initialize the session memory manager."""
-        self.sessions: Dict[str, SessionMemory] = {}
+        self.sessions: dict[str, SessionMemory] = {}
         self.session_file = "data/sessions.json"
         self.load_sessions()
 
@@ -39,7 +39,7 @@ class SessionMemoryManager:
         logger.info(f"Created new session: {session_id}")
         return session_id
 
-    def get_session(self, session_id: str) -> Optional[SessionMemory]:
+    def get_session(self, session_id: str) -> SessionMemory | None:
         """Get a session by ID."""
         if session_id in self.sessions:
             self.sessions[session_id].last_accessed = datetime.now()
@@ -68,14 +68,14 @@ class SessionMemoryManager:
             logger.error(f"Failed to store workflow state: {str(e)}")
             return False
 
-    def get_workflow_state(self, session_id: str) -> Optional[Dict[str, Any]]:
+    def get_workflow_state(self, session_id: str) -> dict[str, Any] | None:
         """Get workflow state for a session."""
         session = self.get_session(session_id)
         if session:
             return session.workflow_state
         return None
 
-    def add_conversation_entry(self, session_id: str, entry: Dict[str, Any]) -> bool:
+    def add_conversation_entry(self, session_id: str, entry: dict[str, Any]) -> bool:
         """Add a conversation entry to session history."""
         if session_id not in self.sessions:
             return False
@@ -86,7 +86,7 @@ class SessionMemoryManager:
         self.save_sessions()
         return True
 
-    def get_conversation_history(self, session_id: str) -> List[Dict[str, Any]]:
+    def get_conversation_history(self, session_id: str) -> list[dict[str, Any]]:
         """Get conversation history for a session."""
         session = self.get_session(session_id)
         if session:
@@ -128,7 +128,7 @@ class SessionMemoryManager:
 
         return len(expired_sessions)
 
-    def get_session_summary(self, session_id: str) -> Optional[Dict[str, Any]]:
+    def get_session_summary(self, session_id: str) -> dict[str, Any] | None:
         """Get a summary of session information."""
         session = self.get_session(session_id)
         if not session:
@@ -144,7 +144,7 @@ class SessionMemoryManager:
             "has_workflow_state": session.workflow_state is not None,
         }
 
-    def list_active_sessions(self) -> List[Dict[str, Any]]:
+    def list_active_sessions(self) -> list[dict[str, Any]]:
         """List all active sessions."""
         active_sessions = []
         for session in self.sessions.values():
@@ -193,7 +193,7 @@ class SessionMemoryManager:
     def load_sessions(self):
         """Load sessions from disk."""
         try:
-            with open(self.session_file, "r") as f:
+            with open(self.session_file) as f:
                 sessions_data = json.load(f)
 
             for session_id, data in sessions_data.items():
