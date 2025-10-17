@@ -137,7 +137,10 @@ The system generates comprehensive test cases including:
 
 The system uses a multi-step LangGraph workflow with conditional routing and error handling. The diagram below shows the actual workflow structure:
 
-![Healthcare Test Case Generation Workflow](docs/healthcare_workflow.png)
+<p align="center">
+  <img src="docs/healthcare_workflow.png" alt="Healthcare Test Case Generation Workflow" width="600"/>
+</p>
+
 
 *Workflow diagram generated using LangGraph's built-in visualization capabilities*
 
