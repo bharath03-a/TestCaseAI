@@ -14,8 +14,7 @@ from .models import ComplianceStandard
 
 # Setup logging
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -42,14 +41,18 @@ def main():
             The system shall provide automated alerts for critical patient conditions.
             The system shall maintain data backup and recovery procedures.
             The system shall support multi-language interfaces for international use.
-            """
+            """,
         }
     ]
 
     # Process documents
     result = test_case_generator.process_documents(
         documents=sample_documents,
-        compliance_standards=[ComplianceStandard.FDA, ComplianceStandard.HIPAA, ComplianceStandard.IEC_62304]
+        compliance_standards=[
+            ComplianceStandard.FDA,
+            ComplianceStandard.HIPAA,
+            ComplianceStandard.IEC_62304,
+        ],
     )
 
     # Print results
@@ -57,16 +60,18 @@ def main():
     print(f"Success: {result['success']}")
     print(f"Session ID: {result['session_id']}")
 
-    if result['success']:
+    if result["success"]:
         print(f"Requirements Count: {len(result.get('requirements', []))}")
         print(f"Test Cases Count: {len(result.get('test_cases', []))}")
-        print(f"Quality Score: {result['quality_metrics']['completeness_score'] if result.get('quality_metrics') else 'N/A'}")
+        print(
+            f"Quality Score: {result['quality_metrics']['completeness_score'] if result.get('quality_metrics') else 'N/A'}"
+        )
     else:
         print(f"Error: {result.get('error', 'Unknown error')}")
 
-    if result.get('error_log'):
+    if result.get("error_log"):
         print("Errors:")
-        for error in result['error_log']:
+        for error in result["error_log"]:
             print(f"  - {error}")
 
 

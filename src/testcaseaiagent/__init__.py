@@ -13,7 +13,4 @@ __version__ = "0.1.0"
 __author__ = "Healthcare AI Team"
 __email__ = "team@healthcareai.com"
 
-__all__ = [
-    "HealthcareTestCaseGenerator",
-    "Settings"
-]
+__all__ = ["HealthcareTestCaseGenerator", "Settings"]

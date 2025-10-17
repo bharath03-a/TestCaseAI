@@ -11,9 +11,9 @@ from .session_memory import SessionMemoryManager
 
 __all__ = [
     "DocumentParser",
-    "RequirementExtractor", 
+    "RequirementExtractor",
     "ComplianceMapper",
     "TestGenerator",
     "QualityValidator",
-    "SessionMemoryManager"
+    "SessionMemoryManager",
 ]

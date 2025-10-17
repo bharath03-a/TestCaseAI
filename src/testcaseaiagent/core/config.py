@@ -24,9 +24,15 @@ class Settings(BaseSettings):
 
     # Processing Configuration
     max_documents_per_batch: int = Field(default=10, env="MAX_DOCUMENTS_PER_BATCH")
-    max_requirements_per_document: int = Field(default=100, env="MAX_REQUIREMENTS_PER_DOCUMENT")
-    max_test_cases_per_requirement: int = Field(default=10, env="MAX_TEST_CASES_PER_REQUIREMENT")
-    processing_timeout_seconds: int = Field(default=300, env="PROCESSING_TIMEOUT_SECONDS")
+    max_requirements_per_document: int = Field(
+        default=100, env="MAX_REQUIREMENTS_PER_DOCUMENT"
+    )
+    max_test_cases_per_requirement: int = Field(
+        default=10, env="MAX_TEST_CASES_PER_REQUIREMENT"
+    )
+    processing_timeout_seconds: int = Field(
+        default=300, env="PROCESSING_TIMEOUT_SECONDS"
+    )
 
     # Quality Thresholds
     min_completeness_score: float = Field(default=0.8, env="MIN_COMPLETENESS_SCORE")
@@ -40,9 +46,9 @@ class Settings(BaseSettings):
             ComplianceStandard.FDA,
             ComplianceStandard.HIPAA,
             ComplianceStandard.IEC_62304,
-            ComplianceStandard.ISO_27001
+            ComplianceStandard.ISO_27001,
         ],
-        env="DEFAULT_COMPLIANCE_STANDARDS"
+        env="DEFAULT_COMPLIANCE_STANDARDS",
     )
 
     # Document Processing
@@ -53,28 +59,28 @@ class Settings(BaseSettings):
             DocumentType.XML,
             DocumentType.MARKDOWN,
             DocumentType.TEXT,
-            DocumentType.EXCEL
+            DocumentType.EXCEL,
         ],
-        env="SUPPORTED_DOCUMENT_TYPES"
+        env="SUPPORTED_DOCUMENT_TYPES",
     )
 
     # Output Configuration
     default_output_formats: List[str] = Field(
-        default=["json", "xlsx", "xml"],
-        env="DEFAULT_OUTPUT_FORMATS"
+        default=["json", "xlsx", "xml"], env="DEFAULT_OUTPUT_FORMATS"
     )
     output_directory: str = Field(default="./output", env="OUTPUT_DIRECTORY")
 
     # Session Management
     session_timeout_minutes: int = Field(default=60, env="SESSION_TIMEOUT_MINUTES")
     max_concurrent_sessions: int = Field(default=10, env="MAX_CONCURRENT_SESSIONS")
-    session_cleanup_interval_minutes: int = Field(default=30, env="SESSION_CLEANUP_INTERVAL_MINUTES")
+    session_cleanup_interval_minutes: int = Field(
+        default=30, env="SESSION_CLEANUP_INTERVAL_MINUTES"
+    )
 
     # Logging Configuration
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
     log_format: str = Field(
-        default="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        env="LOG_FORMAT"
+        default="%(asctime)s - %(name)s - %(levelname)s - %(message)s", env="LOG_FORMAT"
     )
     log_file: Optional[str] = Field(default=None, env="LOG_FILE")
 
@@ -90,35 +96,49 @@ class Settings(BaseSettings):
             "pharmacy_management",
             "patient_monitoring",
             "healthcare_analytics",
-            "healthcare_security"
+            "healthcare_security",
         ],
-        env="HEALTHCARE_DOMAINS"
+        env="HEALTHCARE_DOMAINS",
     )
 
     # Compliance Mapping Rules
-    compliance_mapping_enabled: bool = Field(default=True, env="COMPLIANCE_MAPPING_ENABLED")
+    compliance_mapping_enabled: bool = Field(
+        default=True, env="COMPLIANCE_MAPPING_ENABLED"
+    )
     compliance_mapping_confidence_threshold: float = Field(
         default=0.7, env="COMPLIANCE_MAPPING_CONFIDENCE_THRESHOLD"
     )
 
     # Test Generation Configuration
     test_generation_enabled: bool = Field(default=True, env="TEST_GENERATION_ENABLED")
-    include_negative_test_cases: bool = Field(default=True, env="INCLUDE_NEGATIVE_TEST_CASES")
-    include_boundary_test_cases: bool = Field(default=True, env="INCLUDE_BOUNDARY_TEST_CASES")
-    include_security_test_cases: bool = Field(default=True, env="INCLUDE_SECURITY_TEST_CASES")
+    include_negative_test_cases: bool = Field(
+        default=True, env="INCLUDE_NEGATIVE_TEST_CASES"
+    )
+    include_boundary_test_cases: bool = Field(
+        default=True, env="INCLUDE_BOUNDARY_TEST_CASES"
+    )
+    include_security_test_cases: bool = Field(
+        default=True, env="INCLUDE_SECURITY_TEST_CASES"
+    )
 
     # Integration Configuration
-    jira_integration_enabled: bool = Field(default=False, env="JIRA_INTEGRATION_ENABLED")
+    jira_integration_enabled: bool = Field(
+        default=False, env="JIRA_INTEGRATION_ENABLED"
+    )
     jira_url: Optional[str] = Field(default=None, env="JIRA_URL")
     jira_username: Optional[str] = Field(default=None, env="JIRA_USERNAME")
     jira_api_token: Optional[str] = Field(default=None, env="JIRA_API_TOKEN")
 
-    polarion_integration_enabled: bool = Field(default=False, env="POLARION_INTEGRATION_ENABLED")
+    polarion_integration_enabled: bool = Field(
+        default=False, env="POLARION_INTEGRATION_ENABLED"
+    )
     polarion_url: Optional[str] = Field(default=None, env="POLARION_URL")
     polarion_username: Optional[str] = Field(default=None, env="POLARION_USERNAME")
     polarion_password: Optional[str] = Field(default=None, env="POLARION_PASSWORD")
 
-    azure_devops_integration_enabled: bool = Field(default=False, env="AZURE_DEVOPS_INTEGRATION_ENABLED")
+    azure_devops_integration_enabled: bool = Field(
+        default=False, env="AZURE_DEVOPS_INTEGRATION_ENABLED"
+    )
     azure_devops_url: Optional[str] = Field(default=None, env="AZURE_DEVOPS_URL")
     azure_devops_token: Optional[str] = Field(default=None, env="AZURE_DEVOPS_TOKEN")
 
@@ -135,33 +155,38 @@ class Settings(BaseSettings):
     max_file_size_mb: int = Field(default=50, env="MAX_FILE_SIZE_MB")
 
     # Validation Methods
-    @field_validator('gemini_temperature')
+    @field_validator("gemini_temperature")
     @classmethod
     def validate_temperature(cls, v):
         if not 0.0 <= v <= 1.0:
-            raise ValueError('Temperature must be between 0.0 and 1.0')
+            raise ValueError("Temperature must be between 0.0 and 1.0")
         return v
 
-    @field_validator('gemini_max_tokens')
+    @field_validator("gemini_max_tokens")
     @classmethod
     def validate_max_tokens(cls, v):
         if v <= 0:
-            raise ValueError('Max tokens must be positive')
+            raise ValueError("Max tokens must be positive")
         return v
 
-    @field_validator('min_completeness_score', 'min_accuracy_score', 'min_traceability_score', 'min_compliance_score')
+    @field_validator(
+        "min_completeness_score",
+        "min_accuracy_score",
+        "min_traceability_score",
+        "min_compliance_score",
+    )
     @classmethod
     def validate_scores(cls, v):
         if not 0.0 <= v <= 1.0:
-            raise ValueError('Scores must be between 0.0 and 1.0')
+            raise ValueError("Scores must be between 0.0 and 1.0")
         return v
 
-    @field_validator('log_level')
+    @field_validator("log_level")
     @classmethod
     def validate_log_level(cls, v):
-        valid_levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
+        valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
         if v.upper() not in valid_levels:
-            raise ValueError(f'Log level must be one of {valid_levels}')
+            raise ValueError(f"Log level must be one of {valid_levels}")
         return v.upper()
 
     class Config:

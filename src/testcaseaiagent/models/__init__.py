@@ -19,12 +19,12 @@ from .base import (
     GraphState,
     APIResponse,
     BatchProcessingRequest,
-    ValidationResult
+    ValidationResult,
 )
 
 __all__ = [
     "DocumentType",
-    "ComplianceStandard", 
+    "ComplianceStandard",
     "TestCaseType",
     "TestCasePriority",
     "ProcessingStatus",
@@ -39,5 +39,5 @@ __all__ = [
     "GraphState",
     "APIResponse",
     "BatchProcessingRequest",
-    "ValidationResult"
+    "ValidationResult",
 ]
