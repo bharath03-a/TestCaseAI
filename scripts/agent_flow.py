@@ -1,6 +1,7 @@
 from IPython.display import Image, display
-from testcaseaiagent.workflows.main_workflow import HealthcareTestCaseGenerator
 from langchain_core.runnables.graph import MermaidDrawMethod
+
+from testcaseaiagent.workflows.main_workflow import HealthcareTestCaseGenerator
 
 # Assuming your workflow is compiled
 healthcare_generator = HealthcareTestCaseGenerator()

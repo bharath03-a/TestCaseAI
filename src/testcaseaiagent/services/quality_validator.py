@@ -3,7 +3,8 @@ Quality validation service for generated test cases.
 """
 
 import logging
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from ..models import QualityMetrics, Requirement, TestCase
 
 logger = logging.getLogger(__name__)

@@ -4,10 +4,12 @@ Test case generation service for healthcare requirements.
 
 import json
 import logging
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from langchain_google_genai import ChatGoogleGenerativeAI
-from ..models import Requirement, TestCase, TestCaseType, TestCasePriority
+
 from ..core.config import settings
+from ..models import Requirement, TestCase, TestCasePriority, TestCaseType
 
 logger = logging.getLogger(__name__)
 

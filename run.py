@@ -4,9 +4,10 @@ Simple script to run the Healthcare Test Case Generation System.
 """
 
 import os
-import dotenv
 import sys
 from pathlib import Path
+
+import dotenv
 
 dotenv.load_dotenv()
 

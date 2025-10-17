@@ -3,9 +3,11 @@ Application configuration and settings management.
 """
 
 from typing import List, Optional
+
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
-from ..models import ComplianceStandard, TestCasePriority, DocumentType
+
+from ..models import ComplianceStandard, DocumentType, TestCasePriority
 
 
 class Settings(BaseSettings):

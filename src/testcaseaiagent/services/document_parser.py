@@ -3,7 +3,8 @@ Document parsing service for healthcare requirements.
 """
 
 import logging
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from ..models import DocumentMetadata, DocumentType, ProcessingStatus
 
 logger = logging.getLogger(__name__)

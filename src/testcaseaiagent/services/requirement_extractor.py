@@ -3,10 +3,12 @@ Requirement extraction service using AI for healthcare domain.
 """
 
 import logging
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from langchain_google_genai import ChatGoogleGenerativeAI
-from ..models import Requirement, TestCasePriority, ProcessingStatus
+
 from ..core.config import settings
+from ..models import ProcessingStatus, Requirement, TestCasePriority
 
 logger = logging.getLogger(__name__)
 

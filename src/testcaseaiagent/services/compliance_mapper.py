@@ -4,10 +4,12 @@ Compliance mapping service for healthcare requirements.
 
 import json
 import logging
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 from langchain_google_genai import ChatGoogleGenerativeAI
-from ..models import ComplianceStandard, Requirement, ComplianceMapping
+
 from ..core.config import settings
+from ..models import ComplianceMapping, ComplianceStandard, Requirement
 
 logger = logging.getLogger(__name__)
 

@@ -10,8 +10,8 @@ from pathlib import Path
 # Add the src directory to the Python path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from testcaseaiagent.workflows import HealthcareTestCaseGenerator
 from testcaseaiagent.models import ComplianceStandard
+from testcaseaiagent.workflows import HealthcareTestCaseGenerator
 
 
 def main():

@@ -2,10 +2,11 @@
 Core data models and enums for the healthcare test case generation system.
 """
 
-from typing import List, Dict, Any, Optional, Union, Literal
-from pydantic import BaseModel, Field
 from datetime import datetime
 from enum import Enum
+from typing import Any, Dict, List, Literal, Optional, Union
+
+from pydantic import BaseModel, Field
 
 
 class DocumentType(str, Enum):
